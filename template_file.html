@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ dozi_or_terap }}</title>
+  <style>
+    body, h1, h2, p, table, ul, li {
+      font-family: "TeXGyreHeros", sans-serif;
+    }
+
+    body {
+      font-size: 12pt;
+      margin: 2cm 1.4cm 2.5cm 1.4cm;
+      color: #000;
+    }
+
+    h1 {
+      font-size: 24pt;
+      text-align: center;
+      font-weight: bold;
+      text-decoration: underline;
+      margin-bottom: 1em;
+    }
+
+    h2 {
+      font-size: 18pt;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      border-bottom: 1px solid black;
+      padding-bottom: 0em;
+    }
+
+    table {
+      width: 50%;
+      border-collapse: collapse;
+      margin-bottom: 1em;
+    }
+
+    td {
+      padding: 0.1em 0.1em;
+      vertical-align: top;
+    }
+
+    .label {
+      font-weight: bold;
+      width: 300px;
+    }
+
+    ul {
+      margin-top: 0.2em;
+      margin-bottom: 1em;
+      padding-left: 1.2em;
+    }
+
+    .equation {
+      font-style: italic;
+      text-align: center;
+      margin: 1em 0;
+      font-size: 14pt;
+    }
+
+    .footer {
+      font-size: 10pt;
+      margin-top: 3em;
+      border-top: 1px solid #aaa;
+      padding-top: 0.5em;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    img {
+      width: 100%;
+      margin: 1em 0;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10pt;
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div>FN Královské Vinohrady</div>
+    <div>KRaNM</div>
+  </div>
+
+  <h1>Posterapeutická dozimetrie</h1>
+
+  <h2>Informace o pacientovi</h2>
+  <table>
+    <tr><td class="label">Jméno a příjmení:</td><td><strong>{{ pacient_jmeno }}</strong></td></tr>
+    <tr><td class="label">Datum narození:</td><td><strong>{{ datum_narozeni }}</strong></td></tr>
+    <tr><td class="label">Diagnóza:</td><td>{{ diagnoza }}</td></tr>
+  </table>
+
+  <h2>Léčebné informace</h2>
+  <table>
+    <tr><td class="label">Radiofarmakum:</td><td>{{ radiofarmakum }}</td></tr>
+    <tr><td class="label">Aktivita a datum jejího stanovení:</td><td>{{ aktivita }} {{ datum_aktivita }}</td></tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+    <tr><td class="label">Datum a čas aplikace:</td><td>{{ datum_aplikace }}</td></tr>
+    <tr><td class="label">Aplikovaná aktivita:</td><td><strong>{{ aplikovana_aktivita }}</strong></td></tr>
+    <tr><td class="label">Cílový objem:</td><td>{{ cilovy_objem }}</td></tr>
+  </table>
+
+  <h2>Vyhodnocení naměřených dat</h2>
+  <p>Planární snímky byly pořízeny zařízením {{ zariadeni }}.</p>
+  <p>Snímky byly korigovány na mrtvou dobu (DT), rozptyl (SC) a zeslabení (AC).</p>
+  <p>Do grafu jsou vyneseny hodnoty RIU(t) = A(t)/A_a, kde A(t) bylo získáno podělěním příkonu impulsů v zakreslené ROI kalibračním koeficientem <strong>CF = {{ cf }}</strong>.</p>
+  {% if uptake_image_path %}
+    <img src="{{ uptake_image_path }}" alt="uptake graph" />
+  {% endif %}
+
+  <div class="equation">
+    Data jsou proložena rovnicí:<br/>
+    RIU(t) = (k_t / (k_B - k_T)) (e<sup>-k_T &middot; t</sup> - e<sup>-k_B &middot; t</sup>)
+  </div>
+
+  <ul>
+    <li>k_t = {{ k_t }} h<sup>-1</sup> – rychlost eliminace aktivity z krevního řečiště</li>
+    <li>k_B = {{ k_B }} h<sup>-1</sup> – celková rychlost eliminace aktivity z krevního řečiště</li>
+    <li>k_T = {{ k_T }} h<sup>-1</sup> – celková rychlost eliminace aktivity z cílové tkáně</li>
+  </ul>
+
+  <h2>Stanovení dávky</h2>
+  <p>Ke stanovení dávky je využit formalismus MIRD, kde je dávka na štítnou žlázu stanovena dle následujícího vzorce:</p>
+  <div class="equation">
+    D = ã × S(r_T ← r_S) ≈ (A_a × Ē × TIAC) / M
+  </div>
+
+  <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; margin-bottom: 1em;">
+    <thead style="background-color: #ccc;">
+      <tr>
+        <th>TIAC</th><th>f_proklad</th><th>T<sub>1/2, eff</sub></th><th>Ē</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ tiac }}</td><td>{{ f_proklad }}</td><td>{{ t_eff }}</td><td>{{ e_prumerna }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Po dosazení do vzorce pro stanovení dávky vyjde:</p>
+  <div class="equation" style="font-weight: bold; font-size: 20pt;">
+    D = {{ d }} Gy.
+  </div>
+
+  {% if dose_comparison_image_path %}
+    <img src="{{ dose_comparison_image_path }}" alt="dose comparison" />
+  {% endif %}
+
+  <div class="footer">
+    <div>Vypracováno dne: {{ datum_exportu }}</div>
+    <div>Vypracoval: Bc. Daniel Ptáček</div>
+  </div>
+
+</body>
+</html>

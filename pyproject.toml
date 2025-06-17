@@ -1,0 +1,22 @@
+[project]
+name = "dosithyroid"
+version = "0.1.0"
+description = "GUI aplikace pro výpočet dávky na základě planar SPECT dat (I-131, štítná žláza)"
+authors = [
+  { name = "Daniel Ptáček", email = "danielptacek7@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+  "pydicom",
+  "numpy",
+  "scipy",
+  "pillow",
+  "matplotlib",
+  "lmfit",
+  "psutil",
+  "jinja2>=3.1.6",
+  "weasyprint>=65.1",
+  "xhtml2pdf>=0.2.17",
+]
