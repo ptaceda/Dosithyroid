@@ -19,5 +19,5 @@ Výpočet dávky na štítnou žlázu po aplikaci I-131 pomocí Python aplikace.
 
 ## Autor
 
-**Daniel Ptáček**  
+**Bc. Daniel Ptáček**  
 FNKV + ČVUT FJFI
