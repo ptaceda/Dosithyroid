@@ -8,7 +8,7 @@ from reportlab.lib.fonts import addMapping
 
 
 def register_fonts():
-    font_dir = os.path.join(os.getcwd(), "fonts")
+    font_dir = os.path.join(os.getcwd(), "for_protocol_export\fonts")
     pdfmetrics.registerFont(
         TTFont(
             "TeXGyreHeros", os.path.join(font_dir, "dehinted-TeXGyreHeros-Regular.ttf")
