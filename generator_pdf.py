@@ -57,15 +57,15 @@ if __name__ == "__main__":
 
     data = {
         "dozi_or_terap": "Posterapeutická dozimetrie",
-        "pacient_jmeno": "Ondřej Frydecký",
-        "datum_narozeni": "15.06.2001",
+        "pacient_jmeno": "Pan Tajný",
+        "datum_narozeni": "00.00.0000",
         "diagnoza": "Toxický uzel v pravém laloku ŠŽ",
         "radiofarmakum": "kapsle Na[131I]I",
         "aktivita": "537 MBq",
         "datum_aktivita": "05.03.2025 07:20",
         "datum_aplikace": "12.02.2025 08:15",
         "aplikovana_aktivita": "535,9 MBq",
-        "cilovy_objem": "PL ŠŽ 30x30x47mm ≃ 23,3 g dle UZ 20.02.2025, MUDr. Šimon Bátěk",
+        "cilovy_objem": "PL ŠŽ 30x30x47mm ≃ 23,3 g dle UZ 20.02.2025, MUDr. Pan Neznámý",
         "zariadeni": "GE Optima NM/CT 640",
         "cf": "7,77 cps/MBq",
         "uptake_image_path": "uptake_z_planaru.png",
